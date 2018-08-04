@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\SharpNodeSettings.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -39,6 +40,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,12 +49,94 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\TreeViewEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Core\SharpNodeServer.cs" />
     <Compile Include="Device\DeviceCore.cs" />
     <Compile Include="Device\DeviceMelsecMc.cs" />
     <Compile Include="Device\DeviceModbusTcp.cs" />
     <Compile Include="Device\DeviceModbusTcpAlien.cs" />
     <Compile Include="Device\DeviceOmron.cs" />
     <Compile Include="Device\DeviceSiemens.cs" />
+    <Compile Include="Forms\FormAlienNode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormAlienNode.designer.cs">
+      <DependentUpon>FormAlienNode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormEmpty.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormEmpty.designer.cs">
+      <DependentUpon>FormEmpty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormMelsec3E.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormMelsec3E.designer.cs">
+      <DependentUpon>FormMelsec3E.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormModbusServer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormModbusServer.designer.cs">
+      <DependentUpon>FormModbusServer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormModbusTcp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormModbusTcp.designer.cs">
+      <DependentUpon>FormModbusTcp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormModbusTcpAlien.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormModbusTcpAlien.designer.cs">
+      <DependentUpon>FormModbusTcpAlien.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormNodeClass.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormNodeClass.designer.cs">
+      <DependentUpon>FormNodeClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormNodeSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormNodeSetting.designer.cs">
+      <DependentUpon>FormNodeSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormOmron.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormOmron.designer.cs">
+      <DependentUpon>FormOmron.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormRegularNode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormRegularNode.designer.cs">
+      <DependentUpon>FormRegularNode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormRequest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormRequest.designer.cs">
+      <DependentUpon>FormRequest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormSelectDevice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormSelectDevice.Designer.cs">
+      <DependentUpon>FormSelectDevice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormSiemens.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormSiemens.designer.cs">
+      <DependentUpon>FormSiemens.cs</DependentUpon>
+    </Compile>
     <Compile Include="Node\Device\DeviceNode.cs" />
     <Compile Include="Node\Device\NodeEmpty.cs" />
     <Compile Include="Node\Device\NodeMelsecMc.cs" />
@@ -73,10 +157,168 @@
     <Compile Include="Node\Server\NodeModbusServer.cs" />
     <Compile Include="Node\Server\ServerNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Util.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Imgs\abstr1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Forms\FormAlienNode.resx">
+      <DependentUpon>FormAlienNode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormEmpty.resx">
+      <DependentUpon>FormEmpty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormMelsec3E.resx">
+      <DependentUpon>FormMelsec3E.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormModbusServer.resx">
+      <DependentUpon>FormModbusServer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormModbusTcp.resx">
+      <DependentUpon>FormModbusTcp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormModbusTcpAlien.resx">
+      <DependentUpon>FormModbusTcpAlien.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormNodeClass.resx">
+      <DependentUpon>FormNodeClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormNodeSetting.resx">
+      <DependentUpon>FormNodeSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormOmron.resx">
+      <DependentUpon>FormOmron.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormRegularNode.resx">
+      <DependentUpon>FormRegularNode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormRequest.resx">
+      <DependentUpon>FormRequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormSelectDevice.resx">
+      <DependentUpon>FormSelectDevice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormSiemens.resx">
+      <DependentUpon>FormSiemens.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\action_add_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\action_Cancel_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\arrow_open_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\ASCube_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\Class_489.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\ClassIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\Enum_582.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\envelope_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\Event_594.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\Event_594_exp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\ExtensionManager_vsix.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\FieldsHeader_12x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\flag_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\FlagRed_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\FlagSpace_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\GenericVSEditor_9905.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\HotSpot_10548.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\HotSpot_10548_color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\interface_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\library_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\Method_636.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\Module_648.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\Monitor_Screen_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\Operator_660.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\PencilAngled_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\PencilAngled_16xLG_color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\Property_501.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\save_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\server_Local_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\star_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\usbcontroller.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\VirtualMachine_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\WindowsAzure_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\WindowsAzure_16xLG_Cyan.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\xbox1Color_16x.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

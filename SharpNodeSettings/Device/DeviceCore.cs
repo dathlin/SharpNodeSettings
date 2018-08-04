@@ -3,6 +3,7 @@ using HslCommunication.Core;
 using HslCommunication.Core.Net;
 using HslCommunication.LogNet;
 using Newtonsoft.Json.Linq;
+using SharpNodeSettings.Node.Device;
 using SharpNodeSettings.Node.Request;
 using System;
 using System.Collections.Generic;
@@ -40,7 +41,7 @@ namespace SharpNodeSettings.Device
         /// <summary>
         /// 设备分布的信息点
         /// </summary>
-        public string[] DeviceNode { get; protected set; }
+        public string[] DeviceNodes { get; protected set; }
         
         /// <summary>
         /// 所有的请求列表
@@ -177,6 +178,32 @@ namespace SharpNodeSettings.Device
             return result;
         }
 
+        /// <summary>
+        /// 判断当前的设备是否是传入的节点参数信息
+        /// </summary>
+        /// <param name="nodes">传入的节点参数信息</param>
+        /// <returns>是否是当前的设备</returns>
+        public bool IsCurrentDevice( string[] nodes )
+        {
+            if (DeviceNodes != null && nodes != null)
+            {
+                if (DeviceNodes.Length != nodes.Length) return false;
+
+                for (int i = 0; i < DeviceNodes.Length; i++)
+                {
+                    if(DeviceNodes[i] != nodes[i])
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
 
         #endregion
@@ -273,7 +300,7 @@ namespace SharpNodeSettings.Device
                 {
                     dynamic value = regular.GetValue( data, ByteTransform );
                     JObjectData[regular.Name] = regular.GetValue( data, ByteTransform );
-                    WriteCustomerData?.Invoke( DeviceNode, regular.Name, value );
+                    WriteCustomerData?.Invoke( DeviceNodes, regular.Name, value );
                 }
                 jsonLock.Leave( );
             }
@@ -288,9 +315,39 @@ namespace SharpNodeSettings.Device
 
         #region Static Helper
 
-        public static DeviceCore CreateFromXElement(XElement xElement)
+        /// <summary>
+        /// 通过真实配置的设备信息，来创建一个真实的设备，如果类型不存在，将返回null
+        /// </summary>
+        /// <param name="device">设备的配置信息</param>
+        /// <returns>真实的设备对象</returns>
+        public static DeviceCore CreateFromXElement(XElement device )
         {
+            int deviceType = int.Parse( device.Attribute( "DeviceType" ).Value );
 
+            if (deviceType == DeviceNode.ModbusTcpAlien)
+            {
+                return new DeviceModbusTcpAlien( device );
+            }
+            else if (deviceType == DeviceNode.ModbusTcpClient)
+            {
+                return new DeviceModbusTcp( device );
+            }
+            else if (deviceType == DeviceNode.MelsecMcQna3E)
+            {
+                return new DeviceMelsecMc( device );
+            }
+            else if (deviceType == DeviceNode.Omron)
+            {
+                return new DeviceOmron( device );
+            }
+            else if (deviceType == DeviceNode.Siemens)
+            {
+                return new DeviceSiemens( device );
+            }
+            else
+            {
+                return null;
+            }
         }
 
         #endregion

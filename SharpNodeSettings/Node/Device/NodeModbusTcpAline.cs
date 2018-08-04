@@ -109,7 +109,18 @@ namespace SharpNodeSettings.Node.Device
         }
 
         #endregion
-        
 
+        #region Object Override
+
+        /// <summary>
+        /// 返回表示当前对象的字符串
+        /// </summary>
+        /// <returns>字符串信息</returns>
+        public override string ToString( )
+        {
+            return "[异形设备] " + Name;
+        }
+
+        #endregion
     }
 }

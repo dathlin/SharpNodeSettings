@@ -11,16 +11,16 @@ using System.Xml.Linq;
 namespace SharpNodeSettings.Device
 {
     /// <summary>
-    /// 异形ModbusTcp的客户端
+    /// 异形的Modbus-tcp的设备信息，包含了核心的连接对象
     /// </summary>
     public class DeviceModbusTcpAlien : DeviceCore
     {
         #region Constructor
 
         /// <summary>
-        /// 默认的构造方法
+        /// 实例化一个异形的Modbus-tcp的设备对象，从配置信息创建
         /// </summary>
-        /// <param name="element"></param>
+        /// <param name="element">配置信息</param>
         public DeviceModbusTcpAlien( XElement element )
         {
             NodeModbusTcpAline modbusTcpAline = new NodeModbusTcpAline( );
@@ -31,6 +31,8 @@ namespace SharpNodeSettings.Device
             modbusTcp = new ModbusTcpNet( string.Empty, 502, modbusTcpAline.Station );
             modbusTcp.AddressStartWithZero = modbusTcpAline.IsAddressStartWithZero;
             modbusTcp.ConnectionId = modbusTcpAline.DTU;
+            modbusTcp.IsMultiWordReverse = modbusTcpAline.IsWordReverse;
+            modbusTcp.IsStringReverse = modbusTcpAline.IsStringReverse;
 
 
             ByteTransform = modbusTcp.ByteTransform;

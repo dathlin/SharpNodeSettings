@@ -24,10 +24,21 @@ namespace SharpNodeSettings.Node.Device
             InstallationPlace = "A区域角落";
             DeviceType = DeviceNode.DeviceNone;
         }
-        
+
         #endregion
 
-        
+        #region Object Override
+
+        /// <summary>
+        /// 返回表示当前对象的字符串
+        /// </summary>
+        /// <returns>字符串信息</returns>
+        public override string ToString( )
+        {
+            return "[空设备] " + Name;
+        }
+
+        #endregion
 
     }
 }
