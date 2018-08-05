@@ -24,6 +24,7 @@ namespace SharpNodeSettings.Node.Server
             CreateTime = DateTime.Now;
             NodeType = NodeClassInfo.ServerNode;
             Description = "这是一个Alien服务器";
+            NodeHead = "ServerNode";
         }
 
 

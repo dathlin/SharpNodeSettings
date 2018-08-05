@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpNodeSettings", "SharpNodeSettings\SharpNodeSettings.csproj", "{3CB75AE4-7129-4B65-9DC2-8E8C0264DB0D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpNodeSettings.Tools", "SharpNodeSettings.Tools\SharpNodeSettings.Tools.csproj", "{6E8A5429-F219-4DC2-B950-F20F49C99B78}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3CB75AE4-7129-4B65-9DC2-8E8C0264DB0D} = {3CB75AE4-7129-4B65-9DC2-8E8C0264DB0D}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

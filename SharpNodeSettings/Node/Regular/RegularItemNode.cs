@@ -20,7 +20,7 @@ namespace SharpNodeSettings.Node.Regular
         /// </summary>
         public RegularItemNode( )
         {
-            NodeType = NodeClassInfo.RegularNode;
+            NodeType = NodeClassInfo.RegularItemNode;
             NodeHead = "RegularItemNode";
         }
 
@@ -28,7 +28,7 @@ namespace SharpNodeSettings.Node.Regular
         /// <summary>
         /// 类型的代号，详细参见const数据
         /// </summary>
-        public int RegularCode { get; set; }
+        public int RegularCode { get; set; } = RegularNodeTypeItem.Int16.Code;
 
         /// <summary>
         /// 类型的长度，对于string来说，就是字符串长度，其他的来说，就是数组长度
@@ -252,6 +252,21 @@ namespace SharpNodeSettings.Node.Regular
             return element;
         }
 
+
+
+        /// <summary>
+        /// 获取用于在数据表信息中显示的键值数据对信息
+        /// </summary>
+        /// <returns>键值数据对列表</returns>
+        public override List<NodeClassRenderItem> GetNodeClassRenders( )
+        {
+            var list = base.GetNodeClassRenders( );
+            list.Add( new NodeClassRenderItem( "索引位置", Index.ToString( ) ) );
+            list.Add( new NodeClassRenderItem( "类型值", RegularCode.ToString( ) ) );
+            list.Add( new NodeClassRenderItem( "类型数据长度", TypeLength.ToString( ) ) );
+
+            return list;
+        }
 
 
         #endregion

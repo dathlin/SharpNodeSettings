@@ -1,5 +1,5 @@
 ﻿
-namespace SharpNodeSettings.Forms
+namespace SharpNodeSettings.View
 {
     partial class FormNodeSetting
     {
@@ -62,19 +62,19 @@ namespace SharpNodeSettings.Forms
             this.删除节点ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cMS_ModbusServer = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.新增ModbusTcpServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.新增AlienServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cMS_AlienClient = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.异形ModbusTcpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.编辑节点ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.删除节点ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.treeView1 = new SharpNodeSettings.Controls.TreeViewEx();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.treeView1 = new SharpNodeSettings.Controls.TreeViewEx();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.新增AlienServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.cMS_Regular_Add = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.新增RequestToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.cMS_EditRegular = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -350,6 +350,14 @@ namespace SharpNodeSettings.Forms
             this.新增ModbusTcpServerToolStripMenuItem.Text = "新增ModbusTcpServer";
             this.新增ModbusTcpServerToolStripMenuItem.Click += new System.EventHandler(this.新增ModbusTcpServerToolStripMenuItem_Click);
             // 
+            // 新增AlienServerToolStripMenuItem
+            // 
+            this.新增AlienServerToolStripMenuItem.Image = global::SharpNodeSettings.Properties.Resources.action_add_16xLG;
+            this.新增AlienServerToolStripMenuItem.Name = "新增AlienServerToolStripMenuItem";
+            this.新增AlienServerToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
+            this.新增AlienServerToolStripMenuItem.Text = "新增AlienServer";
+            this.新增AlienServerToolStripMenuItem.Click += new System.EventHandler(this.新增AlienServerToolStripMenuItem_Click);
+            // 
             // cMS_AlienClient
             // 
             this.cMS_AlienClient.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -392,25 +400,6 @@ namespace SharpNodeSettings.Forms
             this.删除节点ToolStripMenuItem1.Text = "删除节点";
             this.删除节点ToolStripMenuItem1.Click += new System.EventHandler(this.删除deleteToolStripMenuItem_Click);
             // 
-            // treeView1
-            // 
-            this.treeView1.Location = new System.Drawing.Point(6, 24);
-            this.treeView1.Name = "treeView1";
-            treeNode1.Name = "node_devices";
-            treeNode1.Text = "Devices";
-            treeNode2.Name = "node_modbusServer";
-            treeNode2.Text = "Server";
-            treeNode3.Name = "node_modbusAlien";
-            treeNode3.Text = "Regular";
-            this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
-            this.treeView1.Size = new System.Drawing.Size(312, 583);
-            this.treeView1.TabIndex = 0;
-            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
-            this.treeView1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeView1_MouseDown);
-            // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -429,6 +418,28 @@ namespace SharpNodeSettings.Forms
             this.splitContainer1.SplitterDistance = 321;
             this.splitContainer1.TabIndex = 6;
             // 
+            // treeView1
+            // 
+            this.treeView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.treeView1.Location = new System.Drawing.Point(6, 24);
+            this.treeView1.Name = "treeView1";
+            treeNode1.Name = "node_devices";
+            treeNode1.Text = "Devices";
+            treeNode2.Name = "node_modbusServer";
+            treeNode2.Text = "Server";
+            treeNode3.Name = "node_modbusAlien";
+            treeNode3.Text = "Regular";
+            this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2,
+            treeNode3});
+            this.treeView1.Size = new System.Drawing.Size(312, 583);
+            this.treeView1.TabIndex = 0;
+            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
+            this.treeView1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeView1_MouseDown);
+            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.panel2);
@@ -440,13 +451,6 @@ namespace SharpNodeSettings.Forms
             this.panel1.Size = new System.Drawing.Size(695, 610);
             this.panel1.TabIndex = 0;
             // 
-            // 新增AlienServerToolStripMenuItem
-            // 
-            this.新增AlienServerToolStripMenuItem.Image = global::SharpNodeSettings.Properties.Resources.action_add_16xLG;
-            this.新增AlienServerToolStripMenuItem.Name = "新增AlienServerToolStripMenuItem";
-            this.新增AlienServerToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
-            this.新增AlienServerToolStripMenuItem.Text = "新增AlienServer";
-            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.panel3);
@@ -455,18 +459,6 @@ namespace SharpNodeSettings.Forms
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(490, 483);
             this.panel2.TabIndex = 4;
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(4, 4);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(147, 21);
-            this.checkBox1.TabIndex = 11;
-            this.checkBox1.Text = "是否显示数据类型名称";
-            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // panel3
             // 
@@ -490,6 +482,18 @@ namespace SharpNodeSettings.Forms
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.Location = new System.Drawing.Point(4, 4);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(147, 21);
+            this.checkBox1.TabIndex = 11;
+            this.checkBox1.Text = "是否显示数据类型名称";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // cMS_Regular_Add
             // 
             this.cMS_Regular_Add.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -503,6 +507,7 @@ namespace SharpNodeSettings.Forms
             this.新增RequestToolStripMenuItem1.Name = "新增RequestToolStripMenuItem1";
             this.新增RequestToolStripMenuItem1.Size = new System.Drawing.Size(145, 22);
             this.新增RequestToolStripMenuItem1.Text = "新增Regular";
+            this.新增RequestToolStripMenuItem1.Click += new System.EventHandler(this.新增RequestToolStripMenuItem1_Click);
             // 
             // cMS_EditRegular
             // 
@@ -519,6 +524,7 @@ namespace SharpNodeSettings.Forms
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
             this.toolStripMenuItem2.Size = new System.Drawing.Size(171, 22);
             this.toolStripMenuItem2.Text = "新增RegularItem";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
             // 
             // toolStripMenuItem3
             // 
@@ -526,6 +532,7 @@ namespace SharpNodeSettings.Forms
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
             this.toolStripMenuItem3.Size = new System.Drawing.Size(171, 22);
             this.toolStripMenuItem3.Text = "编辑Regular";
+            this.toolStripMenuItem3.Click += new System.EventHandler(this.编辑类别editClassToolStripMenuItem_Click);
             // 
             // toolStripMenuItem4
             // 
@@ -533,6 +540,7 @@ namespace SharpNodeSettings.Forms
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
             this.toolStripMenuItem4.Size = new System.Drawing.Size(171, 22);
             this.toolStripMenuItem4.Text = "删除Regular";
+            this.toolStripMenuItem4.Click += new System.EventHandler(this.删除deleteToolStripMenuItem_Click);
             // 
             // FormNodeSetting
             // 
@@ -546,10 +554,11 @@ namespace SharpNodeSettings.Forms
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "FormNodeSetting";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "节点配置器";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormNodeSetting_FormClosing);
             this.Load += new System.EventHandler(this.FormNodeSetting_Load);
+            this.SizeChanged += new System.EventHandler(this.FormNodeSetting_SizeChanged);
             this.cMS_Device.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.cMS_Request.ResumeLayout(false);

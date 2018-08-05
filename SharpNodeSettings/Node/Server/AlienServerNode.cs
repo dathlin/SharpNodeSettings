@@ -12,8 +12,7 @@ namespace SharpNodeSettings.Node.Server
         public AlienServerNode( )
         {
             ServerType = ServerNode.AlienServer;
-
-            NodeHead = "AlienNode";
+            
             Name = "异形服务器";
             Description = "这是一个异形服务器";
         }

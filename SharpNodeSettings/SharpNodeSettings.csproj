@@ -101,10 +101,10 @@
     <Compile Include="Forms\FormNodeClass.designer.cs">
       <DependentUpon>FormNodeClass.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormNodeSetting.cs">
+    <Compile Include="View\FormNodeSetting.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormNodeSetting.designer.cs">
+    <Compile Include="View\FormNodeSetting.designer.cs">
       <DependentUpon>FormNodeSetting.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormOmron.cs">
@@ -118,6 +118,12 @@
     </Compile>
     <Compile Include="Forms\FormRegularNode.designer.cs">
       <DependentUpon>FormRegularNode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormRegularItemNode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormRegularItemNode.designer.cs">
+      <DependentUpon>FormRegularItemNode.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormRequest.cs">
       <SubType>Form</SubType>
@@ -192,7 +198,7 @@
     <EmbeddedResource Include="Forms\FormNodeClass.resx">
       <DependentUpon>FormNodeClass.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormNodeSetting.resx">
+    <EmbeddedResource Include="View\FormNodeSetting.resx">
       <DependentUpon>FormNodeSetting.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormOmron.resx">
@@ -200,6 +206,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormRegularNode.resx">
       <DependentUpon>FormRegularNode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormRegularItemNode.resx">
+      <DependentUpon>FormRegularItemNode.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormRequest.resx">
       <DependentUpon>FormRequest.cs</DependentUpon>

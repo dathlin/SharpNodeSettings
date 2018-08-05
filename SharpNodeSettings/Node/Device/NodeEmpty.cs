@@ -21,7 +21,6 @@ namespace SharpNodeSettings.Node.Device
         {
             Name = "空设备";
             Description = "此设备安装在角落，编号0001";
-            InstallationPlace = "A区域角落";
             DeviceType = DeviceNode.DeviceNone;
         }
 

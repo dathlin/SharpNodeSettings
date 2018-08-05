@@ -35,12 +35,7 @@ namespace SharpNodeSettings.Node.Device
         /// 设备的类别
         /// </summary>
         public int DeviceType { get; set; }
-
-        /// <summary>
-        /// 安装地址
-        /// </summary>
-        public string InstallationPlace { get; set; }
-
+        
         /// <summary>
         /// 安装的时间
         /// </summary>
@@ -70,7 +65,6 @@ namespace SharpNodeSettings.Node.Device
             var list = base.GetNodeClassRenders( );
             list.Add( NodeClassRenderItem.CreateConnectTimeOut( ConnectTimeOut ) );
             list.Add( NodeClassRenderItem.CreateTime( CreateTime ) );
-            list.Add( NodeClassRenderItem.CreateInstallationPlace( InstallationPlace ) );
             list.Add( NodeClassRenderItem.CreateInstallationDate( InstallationDate ) );
             return list;
         }
@@ -85,7 +79,6 @@ namespace SharpNodeSettings.Node.Device
             element.SetAttributeValue( "DeviceType", DeviceType );
             element.SetAttributeValue( "ConnectTimeOut", ConnectTimeOut );
             element.SetAttributeValue( "CreateTime", CreateTime.ToString( ) );
-            element.SetAttributeValue( "InstallationPlace", InstallationPlace );
             element.SetAttributeValue( "InstallationDate", InstallationDate.ToString() );
             return element;
         }
@@ -101,7 +94,6 @@ namespace SharpNodeSettings.Node.Device
             DeviceType = int.Parse( element.Attribute( "DeviceType" ).Value );
             ConnectTimeOut = int.Parse( element.Attribute( "ConnectTimeOut" ).Value );
             CreateTime = DateTime.Parse( element.Attribute( "CreateTime" ).Value );
-            InstallationPlace = element.Attribute( "InstallationPlace" ).Value;
             InstallationDate = DateTime.Parse( element.Attribute( "InstallationDate" ).Value );
         }
 
