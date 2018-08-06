@@ -46,10 +46,10 @@ namespace SharpNodeSettings.Forms
 
         private void userButton1_Click( object sender, EventArgs e )
         {
-            if(comboBox1.SelectedItem == null)
+            string praseRegularCode = "";
+            if (comboBox1.SelectedItem != null)
             {
-                MessageBox.Show( "需要先配置规则解析器数据！" );
-                return;
+                praseRegularCode = comboBox1.SelectedItem.ToString( );
             }
 
 
@@ -62,7 +62,7 @@ namespace SharpNodeSettings.Forms
                     Address = textBox3.Text,
                     Length = ushort.Parse( textBox4.Text ),
                     CaptureInterval = int.Parse( textBox6.Text ),
-                    PraseRegularCode = comboBox1.SelectedItem.ToString(),
+                    PraseRegularCode = praseRegularCode,
                 };
             }
             catch(Exception ex)

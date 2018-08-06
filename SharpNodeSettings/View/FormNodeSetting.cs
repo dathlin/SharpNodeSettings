@@ -474,15 +474,27 @@ namespace SharpNodeSettings.View
 
         #region DeviceRequestNode Add
 
-
+        private string[] GetRegularsFromTreeNode( )
+        {
+            List<string> regularNodes = new List<string>( ) { "" };
+            foreach (TreeNode item in treeView1.Nodes[2].Nodes)
+            {
+                if (item.Tag is RegularNode regularNode)
+                {
+                    regularNodes.Add( regularNode.Name );
+                }
+            }
+            return regularNodes.ToArray( );
+        }
+        
         private void 新增RequestToolStripMenuItem_Click( object sender, EventArgs e )
         {
-            // 新增了Modbus-Tcp客户端
             TreeNode node = treeView1.SelectedNode;
             if (node.Tag is DeviceNode deviceNode)
             {
-                // 允许添加请求
-                using (FormRequest formNode = new FormRequest( new DeviceRequest( ) ,null))
+                // 允许添加请求，先获取所有的规则列表
+                // 显示数据请求
+                using (FormRequest formNode = new FormRequest( new DeviceRequest( ) , GetRegularsFromTreeNode( ) ))
                 {
                     if (formNode.ShowDialog( ) == DialogResult.OK)
                     {
@@ -663,7 +675,7 @@ namespace SharpNodeSettings.View
                     else if (node.Tag is DeviceRequest deviceRequest)
                     {
                         // 编辑了Request节点
-                        using (FormRequest formRequest = new FormRequest( deviceRequest, null ))
+                        using (FormRequest formRequest = new FormRequest( deviceRequest, GetRegularsFromTreeNode( ) ))
                         {
                             if (formRequest.ShowDialog( ) == DialogResult.OK)
                             {
@@ -920,7 +932,7 @@ namespace SharpNodeSettings.View
                     // 先绘制选中时的状态效果
                     if (isSelect)
                     {
-                        g.FillRectangle( Brushes.LightPink, new Rectangle( point1.X - 9, point1.Y - 28, point2.X - point1.X + 18, 56 ) );
+                        g.FillRectangle( Brushes.LightPink, new Rectangle( point1.X - 9, point1.Y - 25, point2.X - point1.X + 18, 52 ) );
                     }
 
 
@@ -959,8 +971,8 @@ namespace SharpNodeSettings.View
                     // 先绘制选中时的状态效果
                     if (isSelect)
                     {
-                        g.FillRectangle( Brushes.LightPink, new Rectangle( point1.X - 9, point1.Y - 28, point1_right.X, 56 ) );
-                        g.FillRectangle( Brushes.LightPink, new Rectangle( point2_left.X - 10, point2.Y - 28, point2.X - point2_left.X + 19, 56 ) );
+                        g.FillRectangle( Brushes.LightPink, new Rectangle( point1.X - 9, point1.Y - 25, point1_right.X, 52 ) );
+                        g.FillRectangle( Brushes.LightPink, new Rectangle( point2_left.X - 10, point2.Y - 25, point2.X - point2_left.X + 19, 52 ) );
                     }
 
                     point1.Offset( 0, 12 );
@@ -1258,7 +1270,6 @@ namespace SharpNodeSettings.View
             using (SaveFileDialog dialog = new SaveFileDialog( ))
             {
                 dialog.Filter = "xml文件|*.xml";
-                dialog.CheckFileExists = true;
                 if (dialog.ShowDialog( ) == DialogResult.OK)
                 {
                     SaveNodes( dialog.FileName );

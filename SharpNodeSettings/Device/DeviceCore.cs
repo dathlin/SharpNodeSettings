@@ -41,7 +41,7 @@ namespace SharpNodeSettings.Device
         /// <summary>
         /// 设备分布的信息点
         /// </summary>
-        public string[] DeviceNodes { get; protected set; }
+        public string[] DeviceNodes { get; set; }
         
         /// <summary>
         /// 所有的请求列表

@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpNodeSettings.Tools", "
 		{3CB75AE4-7129-4B65-9DC2-8E8C0264DB0D} = {3CB75AE4-7129-4B65-9DC2-8E8C0264DB0D}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpNodeSettings.SampleServer", "SharpNodeSettings.SampleServer\SharpNodeSettings.SampleServer.csproj", "{1BC2C814-E8A4-4A7A-885F-FA39AA2BA4D9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +26,10 @@ Global
 		{6E8A5429-F219-4DC2-B950-F20F49C99B78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E8A5429-F219-4DC2-B950-F20F49C99B78}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E8A5429-F219-4DC2-B950-F20F49C99B78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BC2C814-E8A4-4A7A-885F-FA39AA2BA4D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BC2C814-E8A4-4A7A-885F-FA39AA2BA4D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BC2C814-E8A4-4A7A-885F-FA39AA2BA4D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BC2C814-E8A4-4A7A-885F-FA39AA2BA4D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
