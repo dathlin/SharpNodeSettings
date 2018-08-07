@@ -1,4 +1,4 @@
-﻿namespace SharpNodeSettings.Forms
+﻿namespace SharpNodeSettings.View
 {
     partial class FormSelectDevice
     {

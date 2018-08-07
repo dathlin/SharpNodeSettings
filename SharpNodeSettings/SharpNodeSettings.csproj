@@ -131,10 +131,16 @@
     <Compile Include="Forms\FormRequest.designer.cs">
       <DependentUpon>FormRequest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormSelectDevice.cs">
+    <Compile Include="View\FormNodeView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormSelectDevice.Designer.cs">
+    <Compile Include="View\FormNodeView.Designer.cs">
+      <DependentUpon>FormNodeView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\FormSelectDevice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\FormSelectDevice.Designer.cs">
       <DependentUpon>FormSelectDevice.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormSiemens.cs">
@@ -213,7 +219,10 @@
     <EmbeddedResource Include="Forms\FormRequest.resx">
       <DependentUpon>FormRequest.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormSelectDevice.resx">
+    <EmbeddedResource Include="View\FormNodeView.resx">
+      <DependentUpon>FormNodeView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\FormSelectDevice.resx">
       <DependentUpon>FormSelectDevice.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormSiemens.resx">

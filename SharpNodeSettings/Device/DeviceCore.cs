@@ -100,6 +100,11 @@ namespace SharpNodeSettings.Device
         /// 指示设备是否正常的状态
         /// </summary>
         public bool IsError { get; set; }
+
+        /// <summary>
+        /// 获取本设备所有的属性数据
+        /// </summary>
+        public string JsonData { get => jsonTmp; }
         
         #endregion
 
