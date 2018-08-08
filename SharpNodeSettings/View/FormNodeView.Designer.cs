@@ -35,11 +35,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.treeView1 = new SharpNodeSettings.Controls.TreeViewEx();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.HslSharpValueName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.HslSharpValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -104,6 +104,15 @@
             this.panel1.Size = new System.Drawing.Size(636, 637);
             this.panel1.TabIndex = 0;
             // 
+            // textBox1
+            // 
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.Location = new System.Drawing.Point(65, 1);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(568, 23);
+            this.textBox1.TabIndex = 4;
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -148,15 +157,6 @@
             this.HslSharpValue.ReadOnly = true;
             this.HslSharpValue.Width = 280;
             // 
-            // textBox1
-            // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(65, 1);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(568, 23);
-            this.textBox1.TabIndex = 4;
-            // 
             // FormNodeView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -169,6 +169,7 @@
             this.Name = "FormNodeView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormNodeView";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormNodeView_FormClosing);
             this.Load += new System.EventHandler(this.FormNodeView_Load);
             this.Shown += new System.EventHandler(this.FormNodeView_Shown);
             this.splitContainer1.Panel1.ResumeLayout(false);

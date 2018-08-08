@@ -62,7 +62,7 @@ namespace SharpNodeSettings.Device
                 siemensS7Net.IpAddress = nodeSiemens.IpAddress;
                 siemensS7Net.ConnectTimeOut = nodeSiemens.ConnectTimeOut;
                 ByteTransform = siemensS7Net.ByteTransform;
-                ReadWriteDevice = siemensFetchWrite;
+                ReadWriteDevice = siemensS7Net;
                 UniqueId = siemensS7Net.ConnectionId;
             }
 

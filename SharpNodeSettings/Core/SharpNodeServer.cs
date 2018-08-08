@@ -54,6 +54,7 @@ namespace SharpNodeSettings.Core
         {
             simplifyServer = new NetSimplifyServer( );
             simplifyServer.Token = this.token;
+            simplifyServer.LogNet = logNet;
             simplifyServer.ReceiveStringEvent += SimplifyServer_ReceiveStringEvent;
             simplifyServer.ServerStart( port );
 
@@ -83,38 +84,13 @@ namespace SharpNodeSettings.Core
                 {
                     if (deviceCores[i].IsCurrentDevice( nodePath ))
                     {
-                        response = deviceCores[i].JsonData;
+                        response = deviceCores[i].GetValueByName( nodePath );
+                        break;
                     }
                 }
 
+                logNet?.WriteDebug( "请求设备信息：" + data );
                 simplifyServer.SendMessage( session, handle, response );
-            }
-            else if(handle == 2)
-            {
-                // 请求设备的单个数据
-                string[] nodePath = data.Split( new char[] { '\\', ':', '-', '.', '_', '/' } );
-                List<string> nodePathList = new List<string>( nodePath );
-                string name = nodePathList.Last( );
-                nodePathList.RemoveAt( nodePathList.Count - 1 );
-
-                string response = string.Empty;
-                for (int i = 0; i < deviceCores.Count; i++)
-                {
-                    if (deviceCores[i].IsCurrentDevice( nodePathList.ToArray() ))
-                    {
-                        dynamic value = deviceCores[i].GetValueByName(name);
-                        if(value.GetType() == typeof( byte[] ))
-                        {
-                            response = HslCommunication.BasicFramework.SoftBasic.ByteToHexString( value );
-                        }
-                        else
-                        {
-                            response = value.ToString( );
-                        }
-                    }
-                }
-
-                simplifyServer.SendMessage( session, string.IsNullOrEmpty( response ) ? 0 : 1, response );
             }
             else
             {
@@ -134,6 +110,11 @@ namespace SharpNodeSettings.Core
         /// 当前系统的令牌
         /// </summary>
         public Guid Token { get => token; set => token = value; }
+
+        /// <summary>
+        /// 系统的日志信息
+        /// </summary>
+        public ILogNet LogNet { get => logNet; set => logNet = value; }
 
         #endregion
 
@@ -169,7 +150,11 @@ namespace SharpNodeSettings.Core
             {
                 if(element != null)
                 {
-                    paths.Add( element.Name.ToString() );
+                    if(element.Attribute( "Name" ) == null)
+                    {
+                        break;
+                    }
+                    paths.Add( element.Attribute("Name").Value );
                     element = element.Parent;
                 }
                 else
@@ -213,7 +198,7 @@ namespace SharpNodeSettings.Core
                 string description = device.Attribute( "Description" ).Value;
 
 
-                DeviceCore deviceReal = DeviceCore.CreateFromXElement( device );
+                DeviceCore deviceReal = Util.CreateFromXElement( device );
                 if (deviceReal != null)
                 {
                     // 添加所有Request的regular信息
@@ -233,7 +218,7 @@ namespace SharpNodeSettings.Core
                     deviceCores.Add( deviceReal );
                     if (this.dictDeviceCores.ContainsKey( deviceReal.UniqueId ))
                     {
-                        this.LogNet?.WriteError( "设备唯一码重复，无法添加集合，ID: " + deviceReal.UniqueId );
+                        this.logNet?.WriteError( "设备唯一码重复，无法添加集合，ID: " + deviceReal.UniqueId );
                     }
                     else
                     {
@@ -251,7 +236,7 @@ namespace SharpNodeSettings.Core
                 NodeModbusServer serverNode = new NodeModbusServer( );
                 serverNode.LoadByXmlElement( xmlNode );
                 ModbusTcpServer server = new ModbusTcpServer( );
-                server.LogNet = LogNet;
+                server.LogNet = logNet;
                 server.Port = serverNode.Port;
                 this.modbusTcpServers.Add( server );
             }
@@ -261,7 +246,7 @@ namespace SharpNodeSettings.Core
                 alienNode.LoadByXmlElement( xmlNode );
 
                 NetworkAlienClient networkAlien = new NetworkAlienClient( );
-                networkAlien.LogNet = LogNet;
+                networkAlien.LogNet = logNet;
                 if (!string.IsNullOrEmpty( alienNode.Password ))
                 {
                     networkAlien.SetPassword( Encoding.ASCII.GetBytes( alienNode.Password ) );
@@ -295,7 +280,7 @@ namespace SharpNodeSettings.Core
         #region Private Member
 
         private Guid token;
-        private ILogNet LogNet;
+        private ILogNet logNet;
         private string fileName = string.Empty;
         private Dictionary<string, List<RegularItemNode>> regularkeyValuePairs;            // 所有的解析规则列表的对象
         private List<ModbusTcpServer> modbusTcpServers;                                    // 所有的ModbusTcp服务器

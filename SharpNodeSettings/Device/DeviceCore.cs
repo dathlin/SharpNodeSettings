@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using SharpNodeSettings.Node.Regular;
 using System.Xml.Linq;
 
 namespace SharpNodeSettings.Device
@@ -192,8 +193,6 @@ namespace SharpNodeSettings.Device
         {
             if (DeviceNodes != null && nodes != null)
             {
-                if (DeviceNodes.Length != nodes.Length) return false;
-
                 for (int i = 0; i < DeviceNodes.Length; i++)
                 {
                     if(DeviceNodes[i] != nodes[i])
@@ -210,6 +209,26 @@ namespace SharpNodeSettings.Device
             }
         }
 
+        /// <summary>
+        /// 获取本设备对象的值信息
+        /// </summary>
+        /// <param name="nodes">节点数据</param>
+        /// <returns>值信息数据</returns>
+        public string GetValueByName( string[] nodes )
+        {
+            if (nodes.Length == DeviceNodes.Length)
+            {
+                return jsonTmp;
+            }
+            else if(nodes.Length > DeviceNodes.Length)
+            {
+                return GetValueByName( nodes[DeviceNodes.Length] );
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
 
         #endregion
 
@@ -295,7 +314,7 @@ namespace SharpNodeSettings.Device
         #endregion
 
         #region JSON Object
-        
+
         private void ParseFromRequest( byte[] data, DeviceRequest request )
         {
             jsonLock.Enter( );
@@ -304,7 +323,19 @@ namespace SharpNodeSettings.Device
                 foreach (var regular in request.RegularNodes)
                 {
                     dynamic value = regular.GetValue( data, ByteTransform );
-                    JObjectData[regular.Name] = regular.GetValue( data, ByteTransform );
+                    if(regular.RegularCode != RegularNodeTypeItem.StringAscii.Code &&
+                        regular.RegularCode != RegularNodeTypeItem.StringUnicode.Code &&
+                        regular.RegularCode != RegularNodeTypeItem.StringUtf8.Code &&
+                        regular.TypeLength>1)
+                    {
+                        // 数组
+                        JObjectData[regular.Name] = new JArray(regular.GetValue( data, ByteTransform ));
+                    }
+                    else
+                    {
+                        // 单个的值
+                        JObjectData[regular.Name] = new JValue(regular.GetValue( data, ByteTransform ));
+                    }
                     WriteCustomerData?.Invoke( DeviceNodes, regular.Name, value );
                 }
                 jsonLock.Leave( );
@@ -317,45 +348,7 @@ namespace SharpNodeSettings.Device
         }
 
         #endregion
-
-        #region Static Helper
-
-        /// <summary>
-        /// 通过真实配置的设备信息，来创建一个真实的设备，如果类型不存在，将返回null
-        /// </summary>
-        /// <param name="device">设备的配置信息</param>
-        /// <returns>真实的设备对象</returns>
-        public static DeviceCore CreateFromXElement(XElement device )
-        {
-            int deviceType = int.Parse( device.Attribute( "DeviceType" ).Value );
-
-            if (deviceType == DeviceNode.ModbusTcpAlien)
-            {
-                return new DeviceModbusTcpAlien( device );
-            }
-            else if (deviceType == DeviceNode.ModbusTcpClient)
-            {
-                return new DeviceModbusTcp( device );
-            }
-            else if (deviceType == DeviceNode.MelsecMcQna3E)
-            {
-                return new DeviceMelsecMc( device );
-            }
-            else if (deviceType == DeviceNode.Omron)
-            {
-                return new DeviceOmron( device );
-            }
-            else if (deviceType == DeviceNode.Siemens)
-            {
-                return new DeviceSiemens( device );
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        #endregion
+        
 
     }
 }

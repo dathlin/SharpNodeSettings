@@ -1,4 +1,6 @@
-﻿using SharpNodeSettings.Node.Regular;
+﻿using SharpNodeSettings.Device;
+using SharpNodeSettings.Node.Device;
+using SharpNodeSettings.Node.Regular;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -52,7 +54,7 @@ namespace SharpNodeSettings
             {
                 if (xmlNode.Attribute( "Name" ).Value == "Regular")
                 {
-                    foreach (XElement element in nodeClass.Elements( "RegularNode" ))
+                    foreach (XElement element in xmlNode.Elements( "RegularNode" ))
                     {
                         List<RegularItemNode> itemNodes = new List<RegularItemNode>( );
                         foreach (XElement xmlItemNode in element.Elements( "RegularItemNode" ))
@@ -74,6 +76,42 @@ namespace SharpNodeSettings
                 }
             }
             return regularkeyValuePairs;
+        }
+
+
+        /// <summary>
+        /// 通过真实配置的设备信息，来创建一个真实的设备，如果类型不存在，将返回null
+        /// </summary>
+        /// <param name="device">设备的配置信息</param>
+        /// <returns>真实的设备对象</returns>
+        public static DeviceCore CreateFromXElement( XElement device )
+        {
+            int deviceType = int.Parse( device.Attribute( "DeviceType" ).Value );
+
+            if (deviceType == DeviceNode.ModbusTcpAlien)
+            {
+                return new DeviceModbusTcpAlien( device );
+            }
+            else if (deviceType == DeviceNode.ModbusTcpClient)
+            {
+                return new DeviceModbusTcp( device );
+            }
+            else if (deviceType == DeviceNode.MelsecMcQna3E)
+            {
+                return new DeviceMelsecMc( device );
+            }
+            else if (deviceType == DeviceNode.Omron)
+            {
+                return new DeviceOmron( device );
+            }
+            else if (deviceType == DeviceNode.Siemens)
+            {
+                return new DeviceSiemens( device );
+            }
+            else
+            {
+                return null;
+            }
         }
 
         #endregion

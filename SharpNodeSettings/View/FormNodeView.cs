@@ -31,7 +31,60 @@ namespace SharpNodeSettings.View
         
         private void FormNodeView_Load( object sender, EventArgs e )
         {
+            ImageResourseLoad( );
+            treeView1.ImageList = SharpImageList;
 
+            treeView1.Nodes[0].ImageKey = "VirtualMachine_16xLG";
+            treeView1.Nodes[0].SelectedImageKey = "VirtualMachine_16xLG";
+            treeView1.Nodes[0].Tag = new NodeClass( )
+            {
+                Name = "Devices",
+                Description = "所有的设备的集合对象"
+            };
+            treeView1.Nodes[1].ImageKey = "VirtualMachine_16xLG";
+            treeView1.Nodes[1].SelectedImageKey = "VirtualMachine_16xLG";
+            treeView1.Nodes[1].Tag = new NodeClass( )
+            {
+                Name = "Server",
+                Description = "所有挂载的服务器"
+            };
+        }
+
+        private ImageList SharpImageList { get; set; }
+
+        private void ImageResourseLoad( )
+        {
+            SharpImageList = new ImageList( );
+            SharpImageList.Images.Add( "abstr1", Properties.Resources.abstr1 );
+            SharpImageList.Images.Add( "action_add_16xLG", Properties.Resources.action_add_16xLG );
+            SharpImageList.Images.Add( "action_Cancel_16xLG", Properties.Resources.action_Cancel_16xLG );
+            SharpImageList.Images.Add( "ClassIcon", Properties.Resources.ClassIcon );
+            SharpImageList.Images.Add( "Class_489", Properties.Resources.Class_489 );
+            SharpImageList.Images.Add( "Enum_582", Properties.Resources.Enum_582 );
+            SharpImageList.Images.Add( "Event_594", Properties.Resources.Event_594 );
+            SharpImageList.Images.Add( "Event_594_exp", Properties.Resources.Event_594_exp );
+            SharpImageList.Images.Add( "FieldsHeader_12x", Properties.Resources.FieldsHeader_12x );
+            SharpImageList.Images.Add( "FlagRed_16x", Properties.Resources.FlagRed_16x );
+            SharpImageList.Images.Add( "FlagSpace_16x", Properties.Resources.FlagSpace_16x );
+            SharpImageList.Images.Add( "flag_16xLG", Properties.Resources.flag_16xLG );
+            SharpImageList.Images.Add( "GenericVSEditor_9905", Properties.Resources.GenericVSEditor_9905 );
+            SharpImageList.Images.Add( "HotSpot_10548", Properties.Resources.HotSpot_10548 );
+            SharpImageList.Images.Add( "ExtensionManager_vsix", Properties.Resources.ExtensionManager_vsix );
+            SharpImageList.Images.Add( "HotSpot_10548_color", Properties.Resources.HotSpot_10548_color );
+            SharpImageList.Images.Add( "library_16xLG", Properties.Resources.library_16xLG );
+            SharpImageList.Images.Add( "Method_636", Properties.Resources.Method_636 );
+            SharpImageList.Images.Add( "Module_648", Properties.Resources.Module_648 );
+            SharpImageList.Images.Add( "Monitor_Screen_16xLG", Properties.Resources.Monitor_Screen_16xLG );
+            SharpImageList.Images.Add( "Operator_660", Properties.Resources.Operator_660 );
+            SharpImageList.Images.Add( "PencilAngled_16xLG", Properties.Resources.PencilAngled_16xLG );
+            SharpImageList.Images.Add( "Property_501", Properties.Resources.Property_501 );
+            SharpImageList.Images.Add( "server_Local_16xLG", Properties.Resources.server_Local_16xLG );
+            SharpImageList.Images.Add( "star_16xLG", Properties.Resources.star_16xLG );
+            SharpImageList.Images.Add( "usbcontroller", Properties.Resources.usbcontroller );
+            SharpImageList.Images.Add( "VirtualMachine_16xLG", Properties.Resources.VirtualMachine_16xLG );
+            SharpImageList.Images.Add( "WindowsAzure_16xLG", Properties.Resources.WindowsAzure_16xLG );
+            SharpImageList.Images.Add( "WindowsAzure_16xLG_Cyan", Properties.Resources.WindowsAzure_16xLG_Cyan );
+            SharpImageList.Images.Add( "xbox1Color_16x", Properties.Resources.xbox1Color_16x );
         }
 
         private void FormNodeView_Shown( object sender, EventArgs e )
@@ -54,7 +107,7 @@ namespace SharpNodeSettings.View
                 return;
             }
 
-
+            ParseFromXmlResourse( resultXml.Content );
         }
 
 
@@ -64,6 +117,10 @@ namespace SharpNodeSettings.View
             XElement xElement = XElement.Parse( xmlString );
             regularkeyValuePairs = Util.ParesRegular( xElement );
 
+            TreeNodeRender( treeView1.Nodes[0], xElement.Elements().ToArray()[0] );
+            TreeNodeRender( treeView1.Nodes[1], xElement.Elements( ).ToArray( )[1] );
+
+            treeView1.ExpandAll( );
         }
 
 
@@ -148,7 +205,9 @@ namespace SharpNodeSettings.View
                     treeNode.Nodes.Add( deviceNode );
                     foreach (XElement request in item.Elements( "DeviceRequest" ))
                     {
-                        string parseCode = request.Attribute( "Name" ).Value;
+                        DeviceRequest deviceRequest = new DeviceRequest( );
+                        deviceRequest.LoadByXmlElement( request );
+                        string parseCode = deviceRequest.PraseRegularCode;
                         if (regularkeyValuePairs.ContainsKey( parseCode ))
                         { 
                             foreach (RegularItemNode regularNodeItem in regularkeyValuePairs[parseCode])
@@ -247,7 +306,7 @@ namespace SharpNodeSettings.View
             if (node.Tag is NodeClass nodeClass)
             {
                 textBox1.Text = string.Join( "/", GetTreePath( node ));
-                if (nodeClass.GetType( ) == typeof( DeviceNode ))
+                if (nodeClass is DeviceNode)
                 {
                     // 显示设备的所有数据
                     OperateResult<string> result = simplifyClient.ReadFromServer( 1, textBox1.Text );
@@ -339,6 +398,10 @@ namespace SharpNodeSettings.View
 
         #endregion
 
-        
+
+        private void FormNodeView_FormClosing( object sender, FormClosingEventArgs e )
+        {
+            simplifyClient?.ConnectClose( );
+        }
     }
 }

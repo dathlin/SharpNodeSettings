@@ -32,13 +32,29 @@ namespace SharpNodeSettings.View
     {
         #region Constructor
 
-
+        /// <summary>
+        /// 实例化一个节点配置器信息
+        /// </summary>
+        /// <param name="fileName">从文件加载</param>
         public FormNodeSetting(string fileName )
         {
             InitializeComponent( );
             Icon = Util.GetWinformICon( );
             ImageResourseLoad( );
             this.fileName = fileName;
+        }
+
+
+        /// <summary>
+        /// 实例化一个节点配置器信息
+        /// </summary>
+        /// <param name="xmlSettings">从Xml文件加载信息</param>
+        public FormNodeSetting( XElement xmlSettings )
+        {
+            InitializeComponent( );
+            Icon = Util.GetWinformICon( );
+            ImageResourseLoad( );
+            this.xElementSettings = xmlSettings;
         }
 
         #endregion
@@ -119,6 +135,7 @@ namespace SharpNodeSettings.View
             checkBox1.CheckedChanged += CheckBox1_CheckedChanged;
 
             if (!string.IsNullOrEmpty( fileName )) LoadByFile( fileName );
+            else LoadByXml( this.xElementSettings );
         }
 
         private void CheckBox1_CheckedChanged( object sender, EventArgs e )
@@ -1248,9 +1265,18 @@ namespace SharpNodeSettings.View
                     element.Add( AddTreeNode( item ) );
                 }
 
-                element.Save( fileName );
+                this.xElementSettings = element;
 
-                MessageBox.Show( "保存成功！" );
+                if (!string.IsNullOrEmpty( fileName ))
+                {
+                    element.Save( fileName );
+                    MessageBox.Show( "保存成功！" );
+                }
+                else
+                {
+                    DialogResult = DialogResult.OK;
+                    return;
+                }
             }
             catch (Exception ex)
             {
@@ -1442,6 +1468,11 @@ namespace SharpNodeSettings.View
         private void LoadByFile( string fileName )
         {
             if (!System.IO.File.Exists( fileName )) return;
+            LoadByXml( XElement.Load( fileName ) );
+        }
+
+        private void LoadByXml(XElement xml )
+        {
             try
             {
                 foreach (TreeNode treeNode in treeView1.Nodes)
@@ -1449,7 +1480,7 @@ namespace SharpNodeSettings.View
                     treeNode.Nodes.Clear( );
                 }
 
-                XElement element = XElement.Load( fileName );
+                XElement element = xml;
                 if (element.Name != "Settings") return;
 
                 // 提取Devices节点数据
@@ -1466,7 +1497,6 @@ namespace SharpNodeSettings.View
                 MessageBox.Show( "加载文件失败，请确认是否系统生成的标准文件！原因：" + ex.Message );
             }
         }
-
 
         private void 打开文件ToolStripMenuItem_Click( object sender, EventArgs e )
         {
@@ -1516,11 +1546,21 @@ namespace SharpNodeSettings.View
         }
 
         #endregion
-        
+
+        #region Public Properties
+
+        /// <summary>
+        /// 当前配置窗口配置的信息
+        /// </summary>
+        public XElement XmlSettings { get => xElementSettings; set => xElementSettings = value; }
+
+        #endregion
+
         #region Private Member
 
         private bool isNodeSettingsModify = false;             // 指示系统的节点是否已经被编辑过
         private string fileName = string.Empty;                // 文件加载和解析的路径
+        private XElement xElementSettings;                     // 如果从Xml进行创建
         private bool isShowText = true;                        // 是否显示规则名信息
         private TreeNode treeNodeSelected = null;              // 当前选择的树节点
         private string selectedRegularItemName = string.Empty; // 选择的规则节点变量的名称

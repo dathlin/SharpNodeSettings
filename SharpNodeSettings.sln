@@ -11,8 +11,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpNodeSettings.Tools", "
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpNodeSettings.SampleServer", "SharpNodeSettings.SampleServer\SharpNodeSettings.SampleServer.csproj", "{1BC2C814-E8A4-4A7A-885F-FA39AA2BA4D9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3CB75AE4-7129-4B65-9DC2-8E8C0264DB0D} = {3CB75AE4-7129-4B65-9DC2-8E8C0264DB0D}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpNodeSettings.NodeView", "SharpNodeSettings.NodeView\SharpNodeSettings.NodeView.csproj", "{545139F0-8040-4DE2-99C2-55E82F952B16}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3CB75AE4-7129-4B65-9DC2-8E8C0264DB0D} = {3CB75AE4-7129-4B65-9DC2-8E8C0264DB0D}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
