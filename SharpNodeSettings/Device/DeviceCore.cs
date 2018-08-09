@@ -33,6 +33,8 @@ namespace SharpNodeSettings.Device
             JObjectData = new JObject( );
             jsonTmp = JObjectData.ToString( );
             jsonLock = new SimpleHybirdLock( );
+            dictDynamicValues = new Dictionary<string, dynamic>( );
+            dictLock = new SimpleHybirdLock( );
         }
 
         #endregion
@@ -62,7 +64,7 @@ namespace SharpNodeSettings.Device
         /// <summary>
         /// 指示读取到数据后应该如何处理
         /// </summary>
-        public Action<string[], string, dynamic> WriteCustomerData { get; set; }
+        public Action<DeviceCore, string> WriteCustomerData { get; set; }
         
 
         /// <summary>
@@ -106,6 +108,11 @@ namespace SharpNodeSettings.Device
         /// 获取本设备所有的属性数据
         /// </summary>
         public string JsonData { get => jsonTmp; }
+
+        /// <summary>
+        /// 获取或设置系统的状态
+        /// </summary>
+        public ILogNet LogNet { get => logNet; set => logNet = value; }
         
         #endregion
 
@@ -170,18 +177,45 @@ namespace SharpNodeSettings.Device
         /// </summary>
         /// <param name="name">节点值名称</param>
         /// <returns>动态值</returns>
-        public dynamic GetValueByName( string name )
+        public dynamic GetDynamicValueByName( string name )
         {
-            dynamic result = "[Null]";
-            jsonLock.Enter( );
+            dynamic value = null;
+            dictLock.Enter( );
+            if (dictDynamicValues.ContainsKey( name ))
+            {
+                value = dictDynamicValues[name];
+            }
+            dictLock.Leave( );
+            return value;
+        }
 
-            if(JObjectData.ContainsKey( name ))
+        /// <summary>
+        /// 通过节点值名称，获取本设备信息的值
+        /// </summary>
+        /// <param name="name">节点值名称</param>
+        /// <returns>JSON值</returns>
+        public JToken GetJsonValueByName( string name )
+        {
+            JToken result = null;
+            jsonLock.Enter( );
+            if (JObjectData.ContainsKey( name ))
             {
                 result = JObjectData[name];
             }
-
             jsonLock.Leave( );
             return result;
+        }
+
+        /// <summary>
+        /// 通过节点值名称，获取本设备信息的值
+        /// </summary>
+        /// <param name="name">节点值名称</param>
+        /// <returns>动态值</returns>
+        public string GetStringValueByName( string name )
+        {
+            JToken jToken = GetJsonValueByName( name );
+            if (jToken == null) return string.Empty;
+            else return jToken.ToString( );
         }
 
         /// <summary>
@@ -193,6 +227,7 @@ namespace SharpNodeSettings.Device
         {
             if (DeviceNodes != null && nodes != null)
             {
+                if (nodes.Length < DeviceNodes.Length) return false;
                 for (int i = 0; i < DeviceNodes.Length; i++)
                 {
                     if(DeviceNodes[i] != nodes[i])
@@ -200,7 +235,6 @@ namespace SharpNodeSettings.Device
                         return false;
                     }
                 }
-
                 return true;
             }
             else
@@ -222,7 +256,7 @@ namespace SharpNodeSettings.Device
             }
             else if(nodes.Length > DeviceNodes.Length)
             {
-                return GetValueByName( nodes[DeviceNodes.Length] );
+                return GetStringValueByName( nodes[DeviceNodes.Length] );
             }
             else
             {
@@ -302,14 +336,16 @@ namespace SharpNodeSettings.Device
 
         #region Private Member
 
-        private Thread thread;                   // 后台读取的线程
-        private int isStarted = 0;               // 是否启动了后台数据读取
-        private AutoResetEvent autoResetQuit;    // 退出系统的时候的同步锁
-        private int isQuit = 0;                  // 是否准备从系统进行退出
-        private ILogNet logNet;                  // 系统的日志
-        private readonly JObject JObjectData;    // JSON数据中心
-        private string jsonTmp = string.Empty;   // JSON数据缓存
-        private SimpleHybirdLock jsonLock;       // JSON对象的安全锁
+        private Thread thread;                                               // 后台读取的线程
+        private int isStarted = 0;                                           // 是否启动了后台数据读取
+        private AutoResetEvent autoResetQuit;                                // 退出系统的时候的同步锁
+        private int isQuit = 0;                                              // 是否准备从系统进行退出
+        private ILogNet logNet;                                              // 系统的日志
+        private readonly JObject JObjectData;                                // JSON数据中心
+        private readonly Dictionary<string, dynamic> dictDynamicValues;      // 系统缓存的实际数据值
+        private string jsonTmp = string.Empty;                               // JSON数据缓存
+        private SimpleHybirdLock jsonLock;                                   // JSON对象的安全锁
+        private SimpleHybirdLock dictLock;                                   // dict词典的数据锁
 
         #endregion
 
@@ -317,34 +353,43 @@ namespace SharpNodeSettings.Device
 
         private void ParseFromRequest( byte[] data, DeviceRequest request )
         {
-            jsonLock.Enter( );
-            try
+            foreach (var regular in request.RegularNodes)
             {
-                foreach (var regular in request.RegularNodes)
+                dynamic value = regular.GetValue( data, ByteTransform );
+
+                jsonLock.Enter( );
+                if (regular.RegularCode != RegularNodeTypeItem.StringAscii.Code &&
+                    regular.RegularCode != RegularNodeTypeItem.StringUnicode.Code &&
+                    regular.RegularCode != RegularNodeTypeItem.StringUtf8.Code &&
+                    regular.TypeLength > 1)
                 {
-                    dynamic value = regular.GetValue( data, ByteTransform );
-                    if(regular.RegularCode != RegularNodeTypeItem.StringAscii.Code &&
-                        regular.RegularCode != RegularNodeTypeItem.StringUnicode.Code &&
-                        regular.RegularCode != RegularNodeTypeItem.StringUtf8.Code &&
-                        regular.TypeLength>1)
-                    {
-                        // 数组
-                        JObjectData[regular.Name] = new JArray(regular.GetValue( data, ByteTransform ));
-                    }
-                    else
-                    {
-                        // 单个的值
-                        JObjectData[regular.Name] = new JValue(regular.GetValue( data, ByteTransform ));
-                    }
-                    WriteCustomerData?.Invoke( DeviceNodes, regular.Name, value );
+                    // 数组
+                    JObjectData[regular.Name] = new JArray( value );
+                }
+                else
+                {
+                    // 单个的值
+                    JObjectData[regular.Name] = new JValue( value );
                 }
                 jsonLock.Leave( );
+                SetDictValue( regular.Name, value );
+                WriteCustomerData?.Invoke( this, regular.Name );
             }
-            catch
+        }
+        
+
+        private void SetDictValue( string name, dynamic value )
+        {
+            dictLock.Enter( );
+            if (dictDynamicValues.ContainsKey( name ))
             {
-                jsonLock.Leave( );
-                throw;
+                dictDynamicValues[name] = value;
             }
+            else
+            {
+                dictDynamicValues.Add( name, value );
+            }
+            dictLock.Leave( );
         }
 
         #endregion

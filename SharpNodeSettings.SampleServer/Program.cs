@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,8 +18,9 @@ namespace SharpNodeSettings.SampleServer
             ILogNet logNet = new LogNetSingle( "log.txt" );
             logNet.BeforeSaveToFile += LogNet_BeforeSaveToFile;
 
-            SharpNodeServer sharpNodeServer = new SharpNodeServer( "settings.xml" );
+            SharpNodeServer sharpNodeServer = new SharpNodeServer( );
             sharpNodeServer.LogNet = logNet;
+            sharpNodeServer.LoadByXmlFile( "settings.xml" );
             sharpNodeServer.ServerStart( 12345 );
 
 

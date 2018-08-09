@@ -26,23 +26,14 @@ namespace SharpNodeSettings.Core
         /// <summary>
         /// 实例化一个对象，需要传入配置文件的路径，根据配置文件的信息即可创建一个节点服务器
         /// </summary>
-        /// <param name="fileName">配置文件的路径</param>
-        public SharpNodeServer( string fileName )
+        public SharpNodeServer( )
         {
-            if (!File.Exists( fileName ))
-            {
-                System.Windows.Forms.MessageBox.Show( "Can't find settings file,  click ok to quit application" );
-                System.Windows.Forms.Application.Exit( );
-                return;
-            }
-
-            this.fileName = fileName;
             token = Guid.Empty;
             deviceCores = new List<DeviceCore>( );
+            networkAliens = new List<NetworkAlienClient>( );
             modbusTcpServers = new List<ModbusTcpServer>( );
             dictDeviceCores = new Dictionary<string, DeviceCore>( );
             settingsLock = new HslCommunication.Core.SimpleHybirdLock( );
-            LoadByXmlFile( );
         }
 
 
@@ -63,9 +54,7 @@ namespace SharpNodeSettings.Core
                 deviceCores[i].StartRead( );
             }
         }
-
-
-
+        
 
         private void SimplifyServer_ReceiveStringEvent( AppSession session, HslCommunication.NetHandle handle, string data )
         {
@@ -103,9 +92,10 @@ namespace SharpNodeSettings.Core
         #region Public Properties
 
         /// <summary>
-        /// 设备解析完成的值对应的额外的操作方法，传递的参数有节点路径值，变量名，动态值
+        /// 设备解析完成的值对应的额外的操作方法，传递的参数有设备值，变量名
         /// </summary>
-        public Action<string[], string, dynamic> WriteCustomerData { get; set; }
+        public Action<DeviceCore, string> WriteCustomerData { get; set; }
+
         /// <summary>
         /// 当前系统的令牌
         /// </summary>
@@ -120,10 +110,14 @@ namespace SharpNodeSettings.Core
 
         #region Xml Load
 
-        private void LoadByXmlFile( )
+        /// <summary>
+        /// 加载配置信息
+        /// </summary>
+        public void LoadByXmlFile( string fileName )
         {
             if (File.Exists( fileName ))
             {
+                this.fileName = fileName;
                 XElement element = XElement.Load( fileName );
                 xElementSettings = element;
 
@@ -139,6 +133,12 @@ namespace SharpNodeSettings.Core
                     settingsLock.Leave( );
                     throw;
                 }
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show( "Can't find settings file,  click ok to quit application" );
+                System.Windows.Forms.Application.Exit( );
+                return;
             }
         }
 
@@ -184,7 +184,7 @@ namespace SharpNodeSettings.Core
                 }
                 else if (xmlNode.Name == "ServerNode")
                 {
-                    
+                    AddServer( xmlNode );
                 }
             }
         }
