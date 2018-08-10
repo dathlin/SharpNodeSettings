@@ -1,0 +1,2 @@
+# SharpNodeSettings
+一个设备及节点配置类库，基于HslCommunication.dll创建，方便的实现PLC根据配置文件动态创建，并支持自动写入相应的服务器对象。
