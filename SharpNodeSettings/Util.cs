@@ -17,17 +17,7 @@ namespace SharpNodeSettings
     /// </summary>
     public class Util
     {
-
-
-
-
-
-
-
-
-
-
-
+        
 
         #region Static Method
 

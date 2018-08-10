@@ -76,9 +76,34 @@ namespace SharpNodeSettings.Node.Regular
         }
 
 
+        /// <summary>
+        /// 获取当前的数据信息实际值
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="byteTransform"></param>
+        /// <returns></returns>
         public dynamic GetValue( byte[] data, IByteTransform byteTransform )
         {
-            if (RegularCode == RegularNodeTypeItem.Int16.Code)
+
+            if (RegularCode == RegularNodeTypeItem.Bool.Code)
+            {
+                if (TypeLength == 1)
+                {
+                    bool[] tmp = HslCommunication.BasicFramework.SoftBasic.ByteToBoolArray( data, data.Length * 8 );
+                    return tmp[Index];
+                }
+                else
+                {
+                    bool[] tmp = HslCommunication.BasicFramework.SoftBasic.ByteToBoolArray( data, data.Length * 8 );
+                    bool[] array = new bool[TypeLength];
+                    for (int i = 0; i < array.Length; i++)
+                    {
+                        array[i] = tmp[Index + i];
+                    }
+                    return array;
+                }
+            }
+            else if (RegularCode == RegularNodeTypeItem.Int16.Code)
             {
                 if (TypeLength == 1)
                 {

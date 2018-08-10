@@ -36,7 +36,7 @@ using System.Security.Cryptography.X509Certificates;
 namespace SharpNodeSettings.OpcUaServer
 {
     /// <summary>
-    /// Implements a basic Quickstart Server.
+    /// Implements a basic SharpNodeSettings Server.
     /// </summary>
     /// <remarks>
     /// Each server instance must have one instance of a StandardServer object which is
@@ -80,8 +80,8 @@ namespace SharpNodeSettings.OpcUaServer
         {
             ServerProperties properties = new ServerProperties();
 
-            properties.ManufacturerName = "OPC Foundation";
-            properties.ProductName = "Quickstart Reference Server";
+            properties.ManufacturerName = "Richard Hu";
+            properties.ProductName = "SharpNodeSettingsServer";
             properties.ProductUri = "http://opcfoundation.org/Quickstart/ReferenceServer/v1.03";
             properties.SoftwareVersion = Utils.GetAssemblySoftwareVersion();
             properties.BuildNumber = Utils.GetAssemblyBuildNumber();
@@ -259,10 +259,5 @@ namespace SharpNodeSettings.OpcUaServer
         #endregion
         #endregion
 
-        #region SharpNodeSettingsServer
-
-
-
-        #endregion
     }
 }

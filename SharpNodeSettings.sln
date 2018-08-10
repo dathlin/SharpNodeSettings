@@ -26,6 +26,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpNodeSettings.RedisServ
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpNodeSettings.OpcUaServer", "SharpNodeSettings.OpcUaServer\SharpNodeSettings.OpcUaServer.csproj", "{AAAF93B6-AE66-486E-A46F-160F1B9DCAD0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3CB75AE4-7129-4B65-9DC2-8E8C0264DB0D} = {3CB75AE4-7129-4B65-9DC2-8E8C0264DB0D}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
