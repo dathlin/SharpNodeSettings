@@ -65,10 +65,10 @@ sharpNodeServer.ServerStart( 12345 );
 ![Picture](https://raw.githubusercontent.com/dathlin/SharpNodeSettings/master/Imgs/SimplifyView.png)
 
 手动配置这样一张表的内容将是灾难性的，所以本库提供了一个可视化的界面配置，代码如下：
-'''
+```
 Form nodeSettings = new SharpNodeSettings.View.FormNodeSetting( "settings.xml" )
 nodeSettings.ShowDialog();
-'''
+```
 上面的代码的意思是显示一个配置创建，配置文件的路径是当前目录下的 **settings.xml** 文件。
 
 您也可以这么写，手动获取用户配置过的数据信息，这样可以实现远程的配置信息：
