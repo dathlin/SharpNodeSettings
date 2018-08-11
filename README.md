@@ -1,8 +1,15 @@
 # SharpNodeSettings
+
+![Build status](https://img.shields.io/badge/Build-Success-green.svg) [![NuGet Status](https://img.shields.io/nuget/v/SharpNodeSettings.svg)](https://www.nuget.org/packages/SharpNodeSettings/) ![NuGet Download](https://img.shields.io/nuget/dt/SharpNodeSettings.svg) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](http://shang.qq.com/wpa/qunwpa?idkey=2278cb9c2e0c04fc305c43e41acff940499a34007dfca9e83a7291e726f9c4e8) [![NetFramework](https://img.shields.io/badge/Language-C%23%207.0-orange.svg)](https://blogs.msdn.microsoft.com/dotnet/2016/08/24/whats-new-in-csharp-7-0/) [![Visual Studio](https://img.shields.io/badge/Visual%20Studio-2017-red.svg)](https://www.visualstudio.com/zh-hans/) ![License status](https://img.shields.io/badge/License-LGPL3.0-yellow.svg) ![copyright status](https://img.shields.io/badge/CopyRight-Richard.Hu-brightgreen.svg) 
+
 一个设备及节点配置类库，基于HslCommunication.dll深度整合创建，用来实现对PLC配置信息的存储和加载解析，同时支持可配置化的PLC数据读取，支持数据显示，其中服务器示例如下：
 * **SampleServer** 简单的演示了如何启动一个服务器程序，虽然示例是基于 **Console** 的应用程序，你也可以实现 **Winform** 或是 **Wpf** 应用程序，
 * **RedisServer** 演示了如果创建一个服务器，并且将读取到数据存入Redis的服务器，详细参照下文的说明。
 * **OpcUaServer** 由于OPC UA在工控界相当火爆，所以此处也集成了这个示例，采用最新的1.4.354.0版本的库实现，主要麻烦的地方在于数据解析，并创建节点，具体参照下文的说明。
+
+```
+Install-Package SharpNodeSettings
+```
 
 ## How to use
 包括服务器和客户端都是围绕配置的Xml文件创建的，示例的Xml文件内容如下：
@@ -149,6 +156,7 @@ if (selectDevice.ShowDialog( ) == DialogResult.OK)
 * **SharpNodeSettings** 组件协议 LGPL3.0 商用需要向作者打赏，金额需要50RMB-100RMB
 * 示例项目（SampleServer,RedisServer,OpcUaServer,Tools）协议为MIT协议
 
-
+## Suupport
+![打赏](https://raw.githubusercontent.com/dathlin/HslCommunication/master/imgs/support.png)
 
 
