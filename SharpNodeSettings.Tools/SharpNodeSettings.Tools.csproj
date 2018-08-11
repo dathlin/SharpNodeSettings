@@ -32,6 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HslCommunication, Version=5.2.1.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="SharpNodeSettings">
       <HintPath>..\SharpNodeSettings\bin\Debug\SharpNodeSettings.dll</HintPath>
     </Reference>
@@ -71,6 +72,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="settings.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

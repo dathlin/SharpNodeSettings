@@ -47,8 +47,15 @@ namespace SharpNodeSettings.RedisServer
             sharpNodeServer.LogNet = logNet;
             sharpNodeServer.WriteCustomerData = ( Device.DeviceCore deviceCore, string name ) =>
             {
-                IDatabase redisDb = redis.GetDatabase( );
-                redisDb.StringSet( string.Join( ":", deviceCore.DeviceNodes ) + ":" + name, deviceCore.GetStringValueByName( name ));
+                try
+                {
+                    IDatabase redisDb = redis.GetDatabase( );
+                    redisDb.StringSet( string.Join( ":", deviceCore.DeviceNodes ) + ":" + name, deviceCore.GetStringValueByName( name ) );
+                }
+                catch
+                {
+                    logNet.WriteError( "写入Redis失败" );
+                }
             };
             // 加载配置文件之前设置redis写入方法
             sharpNodeServer.LoadByXmlFile( "settings.xml" );

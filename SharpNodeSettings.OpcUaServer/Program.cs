@@ -43,7 +43,9 @@ namespace SharpNodeSettings.OpcUaServer
                 application.Start( new SharpNodeSettingsServer( ) ).Wait( );
 
                 // run the application interactively.
-                Application.Run( new ServerForm( application ) );
+                ServerForm serverForm = new ServerForm( application );
+                serverForm.StartPosition = FormStartPosition.CenterScreen;
+                Application.Run( serverForm );
             }
             catch (Exception e)
             {

@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Settings>
+  <NodeClass Name="Devices" Description="所有的设备的集合对象">
+    <NodeClass Name="分厂一" Description="">
+      <NodeClass Name="车间一" Description="" />
+      <NodeClass Name="车间二" Description="">
+        <DeviceNode Name="ModbusTcp客户端" Description="这是描述" DeviceType="10" ConnectTimeOut="1000" CreateTime="2018/8/9 19:58:49" InstallationDate="2018/8/9 19:58:49" IpAddress="127.0.0.1" Port="502" Station="1" IsAddressStartWithZero="true" IsWordReverse="false" IsStringReverse="false">
+          <DeviceRequest Name="数据请求" Description="一次完整的数据请求" Address="0" Length="30" CaptureInterval="1000" PraseRegularCode="ABCD" />
+        </DeviceNode>
+      </NodeClass>
+    </NodeClass>
+    <NodeClass Name="分厂二" Description="位于西南方">
+      <NodeClass Name="车间三" Description="">
+        <DeviceNode Name="测试设备二" Description="这是测试设备二的描述" DeviceType="10" ConnectTimeOut="1000" CreateTime="2018/8/10 23:01:28" InstallationDate="2018/8/10 23:01:28" IpAddress="127.0.0.1" Port="502" Station="1" IsAddressStartWithZero="true" IsWordReverse="false" IsStringReverse="false">
+          <DeviceRequest Name="数据请求" Description="一次完整的数据请求" Address="100" Length="10" CaptureInterval="500" PraseRegularCode="B" />
+        </DeviceNode>
+      </NodeClass>
+    </NodeClass>
+  </NodeClass>
+  <NodeClass Name="Server" Description="所有挂载的服务器">
+    <ServerNode Name="异形服务器" Description="这是一个异形服务器" CreateTime="2018/8/8 13:29:30" Port="1234" ServerType="2" Password="" />
+  </NodeClass>
+  <NodeClass Name="Regular" Description="所有的解析规则的信息">
+    <RegularNode Name="ABCD" Description="">
+      <RegularItemNode Name="温度" Description="" Index="0" TypeCode="3" TypeLength="1" />
+      <RegularItemNode Name="风俗" Description="" Index="2" TypeCode="9" TypeLength="1" />
+      <RegularItemNode Name="转速" Description="" Index="14" TypeCode="9" TypeLength="1" />
+      <RegularItemNode Name="机器人关节" Description="" Index="18" TypeCode="9" TypeLength="6" />
+      <RegularItemNode Name="cvsdf" Description="" Index="42" TypeCode="9" TypeLength="1" />
+      <RegularItemNode Name="条码" Description="条码信息" Index="6" TypeCode="11" TypeLength="8" />
+      <RegularItemNode Name="开关量" Description="设备的开关量信息" Index="368" TypeCode="1" TypeLength="8" />
+    </RegularNode>
+    <RegularNode Name="B" Description="">
+      <RegularItemNode Name="温度" Description="" Index="0" TypeCode="3" TypeLength="1" />
+      <RegularItemNode Name="压力" Description="" Index="2" TypeCode="3" TypeLength="1" />
+    </RegularNode>
+  </NodeClass>
+</Settings>

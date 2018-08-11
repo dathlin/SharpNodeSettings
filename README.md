@@ -6,7 +6,7 @@
 
 ## How to use
 包括服务器和客户端都是围绕配置的Xml文件创建的，示例的Xml文件内容如下：
-'''
+```
 <?xml version="1.0" encoding="utf-8"?>
 <Settings>
   <NodeClass Name="Devices" Description="所有的设备的集合对象">
@@ -45,13 +45,13 @@
     </RegularNode>
   </NodeClass>
 </Settings>
-'''
+```
 只要创建好这个xml文件，就可以调用 **SharpNodeServer** 来创建服务器应用了，可以生成相应的节点信息，并且根据配置信息来请求设备，更新对应的数据。创建服务器的代码如下：
-'''
+```
 SharpNodeServer sharpNodeServer = new SharpNodeServer( );
 sharpNodeServer.LoadByXmlFile( "settings.xml" );
 sharpNodeServer.ServerStart( 12345 );
-'''
+```
 
 这样就启动了一个最简单的服务器，主要包含实例化，加载配置，启动服务器，注意：加载配置必须放置到服务器启动之前。
 
@@ -63,3 +63,91 @@ sharpNodeServer.ServerStart( 12345 );
 
 如果你想实现访问单个的数据，可以使用 **NetSimplifyClient** 创建的Demo来访问，需要注意的是，此处请求的数据都是序列化的JSON字符串。
 ![Picture](https://raw.githubusercontent.com/dathlin/SharpNodeSettings/master/Imgs/SimplifyView.png)
+
+手动配置这样一张表的内容将是灾难性的，所以本库提供了一个可视化的界面配置，代码如下：
+'''
+Form nodeSettings = new SharpNodeSettings.View.FormNodeSetting( "settings.xml" )
+nodeSettings.ShowDialog();
+'''
+上面的代码的意思是显示一个配置创建，配置文件的路径是当前目录下的 **settings.xml** 文件。
+
+您也可以这么写，手动获取用户配置过的数据信息，这样可以实现远程的配置信息：
+```
+using(SharpNodeSettings.View.FormNodeSetting form = new SharpNodeSettings.View.FormNodeSetting( XElement.Load( "settings.xml" ) ))
+{
+    if (form.ShowDialog( ) == DialogResult.OK)
+    {
+        // 配置好的数据信息，在这种方式下可以实现远程配置的操作。
+        XElement xElement = form.XmlSettings;
+        MessageBox.Show( "success" );
+    }
+    else
+    {
+        MessageBox.Show( "failed" );
+    }
+}
+```
+界面效果如下：
+![Picture](https://raw.githubusercontent.com/dathlin/SharpNodeSettings/master/Imgs/NodeSettings.png)
+
+在实际开发中，可能你不需要上述的配置功能，你就想实现某个PLC的设备信息是可配置的，那么也可以通过本组件实现：
+```
+SharpNodeSettings.View.FormSelectDevice selectDevice = new View.FormSelectDevice( );
+if (selectDevice.ShowDialog( ) == DialogResult.OK)
+{
+    XElement xmlDevice = selectDevice.DeviceXml;
+    // 设备的配置对象可用于存储，网络传输等等操作
+
+
+    // 如果想要通过xml信息创建设备
+    SharpNodeSettings.Device.DeviceCore deviceCore = SharpNodeSettings.Util.CreateFromXElement( xmlDevice );
+    // 演示读取数据，此处有个问题在于如果是相同种类的PLC，应用还是很方便的，如果是不同种类的，地址模型就比较麻烦。
+    HslCommunication.OperateResult<short> read = deviceCore.ReadWriteDevice.ReadInt16( "D100" );
+}
+```
+
+## Quick Start
+按照如下的步骤走，就可以急速体验本项目所传达的核心功能价值，就可以明白本项目是否符合您的需求。启动测试之前，你需要准备个真实的设备：
+* 西门子PLC
+* 三菱PLC
+* 欧姆龙PLC
+* ModbusTcp设备
+
+如果您没有真实的设备，也可以从网上下载个Modbus服务器软件，这里也提供一个下载地址：[ModbusTcpServer.zip](https://github.com/dathlin/HslCommunication/raw/master/Download/ModbusTcpServer.zip)
+
+下载完成后启动服务器即可。
+
+#### 配置Xml信息
+去本项目的目录下配置设备的信息: \SharpNodeSettings\XmlFile  运行 SharpNodeSettings.Tools.exe 进行配置，已经配置了一部分，如果想要快速开始，忽略本步骤也可以。
+
+#### SampleServer
+本示例直接重新生成 **SampleServer** 项目，启动程序即可。如果想要看实际的数据信息，启动 **SharpNodeSettings.NodeView** 项目查看
+![Picture](https://raw.githubusercontent.com/dathlin/SharpNodeSettings/master/Imgs/SampleServer.png)
+
+#### RedisServer
+本示例是在 **SampleServer** 的基础上添加了Redis服务器，所以需要先安装好Redis服务器，windows版本下载地址：
+[https://github.com/MicrosoftArchive/redis/releases](https://github.com/MicrosoftArchive/redis/releases)
+
+当然，最好再下载安装一个redis服务器的可视化工具，此处推荐 **RedisDesktopManager**
+[https://github.com/uglide/RedisDesktopManager/releases](https://github.com/uglide/RedisDesktopManager/releases)
+
+然后基于本项目，重新生成 **SharpNodeSettings.RedisServer** 项目，启动服务器
+![Picture](https://raw.githubusercontent.com/dathlin/SharpNodeSettings/master/Imgs/RedisServer.png)
+
+上述的 **SharpNodeSettings.NodeView** 项目依然可以查看，然后下图演示Redis
+
+#### OpcUaServer
+本示例是演示从PLC采集数据并且写入到OPC UA服务器中的示例，重新生成 **SharpNodeSettings.OpcUaServer** 项目，启动它，如果显示是否增加信任证书时，选择是即可。
+
+然后再启动一个 OPC UA Client的示例项目
+![Picture](https://raw.githubusercontent.com/dathlin/SharpNodeSettings/master/Imgs/OpcUaServer.png)
+
+
+## License
+* OpcUa相关的组件的版权归 OPC 基金会所有，使用请遵循相关的协议
+* **SharpNodeSettings** 组件协议 LGPL3.0 商用需要向作者打赏，金额需要50RMB-100RMB
+* 示例项目（SampleServer,RedisServer,OpcUaServer,Tools）协议为MIT协议
+
+
+
+
