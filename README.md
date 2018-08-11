@@ -132,9 +132,10 @@ if (selectDevice.ShowDialog( ) == DialogResult.OK)
 [https://github.com/uglide/RedisDesktopManager/releases](https://github.com/uglide/RedisDesktopManager/releases)
 
 然后基于本项目，重新生成 **SharpNodeSettings.RedisServer** 项目，启动服务器
-![Picture](https://raw.githubusercontent.com/dathlin/SharpNodeSettings/master/Imgs/RedisServer.png)
 
 上述的 **SharpNodeSettings.NodeView** 项目依然可以查看，然后下图演示Redis
+![Picture](https://raw.githubusercontent.com/dathlin/SharpNodeSettings/master/Imgs/RedisServer.png)
+
 
 #### OpcUaServer
 本示例是演示从PLC采集数据并且写入到OPC UA服务器中的示例，重新生成 **SharpNodeSettings.OpcUaServer** 项目，启动它，如果显示是否增加信任证书时，选择是即可。
