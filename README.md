@@ -70,6 +70,10 @@ sharpNodeServer.ServerStart( 12345 );
 怎样查看服务器的数据呢？内置了一个默认的 **SimplifyNet** 服务器，想要知道更多的这个服务器的内容，可以参照下面的博客：[https://www.cnblogs.com/dathlin/p/7697782.html](https://www.cnblogs.com/dathlin/p/7697782.html)
 
 基于 **NetSimplifyClient** 实现了一个通用的数据节点查看器，需要指定服务器的Ip地址和端口号：
+```
+ SharpNodeSettings.View.FormNodeView form = new SharpNodeSettings.View.FormNodeView( "127.0.0.1",12345 )
+ form.ShowDialog();
+```
 ![Picture](https://raw.githubusercontent.com/dathlin/SharpNodeSettings/master/Imgs/NodeView.png)
 
 如果你想实现访问单个的数据，可以使用 **NetSimplifyClient** 创建的Demo来访问，需要注意的是，此处请求的数据都是序列化的JSON字符串。
@@ -128,14 +132,14 @@ if (selectDevice.ShowDialog( ) == DialogResult.OK)
 
 下载完成后启动服务器即可。
 
-#### 配置Xml信息
+### 配置Xml信息
 去本项目的目录下配置设备的信息: \SharpNodeSettings\XmlFile  运行 SharpNodeSettings.Tools.exe 进行配置，已经配置了一部分，如果想要快速开始，忽略本步骤也可以。
 
-#### SampleServer
+### SampleServer
 本示例直接重新生成 **SampleServer** 项目，启动程序即可。如果想要看实际的数据信息，启动 **SharpNodeSettings.NodeView** 项目查看
 ![Picture](https://raw.githubusercontent.com/dathlin/SharpNodeSettings/master/Imgs/SampleServer.png)
 
-#### RedisServer
+### RedisServer
 本示例是在 **SampleServer** 的基础上添加了Redis服务器，所以需要先安装好Redis服务器，windows版本下载地址：
 [https://github.com/MicrosoftArchive/redis/releases](https://github.com/MicrosoftArchive/redis/releases)
 
@@ -148,7 +152,7 @@ if (selectDevice.ShowDialog( ) == DialogResult.OK)
 ![Picture](https://raw.githubusercontent.com/dathlin/SharpNodeSettings/master/Imgs/RedisServer.png)
 
 
-#### OpcUaServer
+### OpcUaServer
 本示例是演示从PLC采集数据并且写入到OPC UA服务器中的示例，重新生成 **SharpNodeSettings.OpcUaServer** 项目，启动它，如果显示是否增加信任证书时，选择是即可。
 
 然后再启动一个 OPC UA Client的示例项目
