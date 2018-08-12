@@ -60,7 +60,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="settings.xml">
+    <Content Include="..\XmlFile\settings.xml">
+      <Link>settings.xml</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
