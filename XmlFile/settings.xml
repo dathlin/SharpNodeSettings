@@ -2,7 +2,11 @@
 <Settings>
   <NodeClass Name="Devices" Description="所有的设备的集合对象">
     <NodeClass Name="分厂一" Description="">
-      <NodeClass Name="车间一" Description="" />
+      <NodeClass Name="车间一" Description="">
+        <DeviceNode Name="测试空设备" Description="此设备安装在角落，编号0001" DeviceType="0" ConnectTimeOut="2000" CreateTime="2018/8/12 9:26:27" InstallationDate="2018/8/12 9:26:27">
+          <DeviceRequest Name="数据请求" Description="一次完整的数据请求" Address="0" Length="10" CaptureInterval="1000" PraseRegularCode="B" />
+        </DeviceNode>
+      </NodeClass>
       <NodeClass Name="车间二" Description="">
         <DeviceNode Name="ModbusTcp客户端" Description="这是描述" DeviceType="10" ConnectTimeOut="1000" CreateTime="2018/8/9 19:58:49" InstallationDate="2018/8/9 19:58:49" IpAddress="127.0.0.1" Port="502" Station="1" IsAddressStartWithZero="true" IsWordReverse="false" IsStringReverse="false">
           <DeviceRequest Name="数据请求" Description="一次完整的数据请求" Address="0" Length="30" CaptureInterval="1000" PraseRegularCode="ABCD" />
