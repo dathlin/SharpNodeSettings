@@ -23,14 +23,17 @@ namespace SharpNodeSettings.Forms
 
         private void FormModbusTcpAlien_Load( object sender, EventArgs e )
         {
-            if(ModbusTcpAline != null)
+            comboBox1.DataSource = HslCommunication.BasicFramework.SoftBasic.GetEnumValues<HslCommunication.Core.DataFormat>( );
+
+            if (ModbusTcpAline != null)
             {
                 textBox1.Text = ModbusTcpAline.Name;
                 textBox2.Text = ModbusTcpAline.Description;
                 textBox3.Text = ModbusTcpAline.DTU;
                 textBox5.Text = ModbusTcpAline.Station.ToString( );
                 checkBox1.Checked = !ModbusTcpAline.IsAddressStartWithZero;
-                checkBox2.Checked = ModbusTcpAline.IsWordReverse;
+                //checkBox2.Checked = ModbusTcpAline.IsWordReverse;
+                comboBox1.SelectedIndex = ModbusTcpAline.DataFormat;
                 checkBox3.Checked = ModbusTcpAline.IsStringReverse;
             }
         }
@@ -56,7 +59,8 @@ namespace SharpNodeSettings.Forms
                 DTU = textBox3.Text,
                 Station = station,
                 IsAddressStartWithZero = !checkBox1.Checked,
-                IsWordReverse = checkBox2.Checked,
+                //IsWordReverse = checkBox2.Checked,
+                DataFormat = comboBox1.SelectedIndex,
                 IsStringReverse = checkBox3.Checked
             };
 

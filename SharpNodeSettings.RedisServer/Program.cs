@@ -1,11 +1,11 @@
-﻿using HslCommunication.LogNet;
-using SharpNodeSettings.Core;
+﻿using SharpNodeSettings.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using StackExchange.Redis;
+using HslCommunication.LogNet;
 
 
 /*****************************************************************************************************************

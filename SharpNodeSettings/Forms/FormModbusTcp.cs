@@ -23,6 +23,7 @@ namespace SharpNodeSettings.Forms
 
         private void FormModbusTcp_Load( object sender, EventArgs e )
         {
+            comboBox1.DataSource = HslCommunication.BasicFramework.SoftBasic.GetEnumValues<HslCommunication.Core.DataFormat>( );
             if (ModbusTcpNode != null)
             {
                 textBox1.Text = ModbusTcpNode.Name;
@@ -31,7 +32,8 @@ namespace SharpNodeSettings.Forms
                 textBox4.Text = ModbusTcpNode.Port.ToString( );
                 textBox5.Text = ModbusTcpNode.Station.ToString( );
                 checkBox1.Checked = !ModbusTcpNode.IsAddressStartWithZero;
-                checkBox2.Checked = ModbusTcpNode.IsWordReverse;
+                //checkBox2.Checked = ModbusTcpNode.IsWordReverse;
+                comboBox1.SelectedIndex = ModbusTcpNode.DataFormat;
                 checkBox3.Checked = ModbusTcpNode.IsStringReverse;
                 textBox6.Text = ModbusTcpNode.ConnectTimeOut.ToString( );
             }
@@ -55,7 +57,8 @@ namespace SharpNodeSettings.Forms
                     Port = int.Parse( textBox4.Text ),
                     Station = byte.Parse( textBox5.Text ),
                     IsAddressStartWithZero = !checkBox1.Checked,
-                    IsWordReverse = checkBox2.Checked,
+                    //IsWordReverse = checkBox2.Checked,
+                    DataFormat = comboBox1.SelectedIndex,
                     IsStringReverse = checkBox3.Checked,
                     ConnectTimeOut = int.Parse( textBox6.Text ),
                 };

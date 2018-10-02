@@ -43,8 +43,9 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.userButton1 = new HslCommunication.Controls.UserButton();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // textBox1
@@ -177,16 +178,6 @@
             this.userButton1.UIText = "确认";
             this.userButton1.Click += new System.EventHandler(this.userButton1_Click);
             // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(100, 148);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(75, 21);
-            this.checkBox2.TabIndex = 17;
-            this.checkBox2.Text = "字节倒转";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
             // checkBox3
             // 
             this.checkBox3.AutoSize = true;
@@ -197,14 +188,33 @@
             this.checkBox3.Text = "字符串倒转";
             this.checkBox3.UseVisualStyleBackColor = true;
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(24, 149);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(68, 17);
+            this.label8.TabIndex = 19;
+            this.label8.Text = "数据格式：";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(100, 146);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(105, 25);
+            this.comboBox1.TabIndex = 20;
+            // 
             // FormModbusTcp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Lavender;
             this.ClientSize = new System.Drawing.Size(448, 267);
+            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.checkBox3);
-            this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.userButton1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.textBox6);
@@ -250,7 +260,8 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private HslCommunication.Controls.UserButton userButton1;
-        private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }

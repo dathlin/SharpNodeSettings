@@ -31,7 +31,7 @@ namespace SharpNodeSettings.Device
             modbusTcp = new ModbusTcpNet( string.Empty, 502, modbusTcpAline.Station );
             modbusTcp.AddressStartWithZero = modbusTcpAline.IsAddressStartWithZero;
             modbusTcp.ConnectionId = modbusTcpAline.DTU;
-            modbusTcp.IsMultiWordReverse = modbusTcpAline.IsWordReverse;
+            modbusTcp.DataFormat = (HslCommunication.Core.DataFormat)modbusTcpAline.DataFormat;
             modbusTcp.IsStringReverse = modbusTcpAline.IsStringReverse;
 
 

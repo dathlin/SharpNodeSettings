@@ -182,13 +182,13 @@ namespace SharpNodeSettings.Node.NodeBase
         }
 
         /// <summary>
-        /// 创建一个显示是否反转的键值对象
+        /// 创建一个显示是数据格式的键值对象
         /// </summary>
         /// <param name="value">是否值</param>
         /// <returns>键值对象</returns>
-        public static NodeClassRenderItem CreateIsWordReverse( bool value )
+        public static NodeClassRenderItem CreateDataFormat( int value )
         {
-            return new NodeClassRenderItem( "是否字节反转", value.ToString( ) );
+            return new NodeClassRenderItem( "数据的格式", value.ToString( ) );
         }
 
         /// <summary>

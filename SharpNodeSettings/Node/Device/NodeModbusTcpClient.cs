@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using HslCommunication.Core;
 
 namespace SharpNodeSettings.Node.Device
 {
@@ -60,7 +61,7 @@ namespace SharpNodeSettings.Node.Device
         /// <summary>
         /// 字节分析是否颠倒
         /// </summary>
-        public bool IsWordReverse { get; set; } = false;
+        public int DataFormat { get; set; } = (int)HslCommunication.Core.DataFormat.DCBA;
 
         /// <summary>
         /// 字符串分析是否颠倒
@@ -82,7 +83,7 @@ namespace SharpNodeSettings.Node.Device
             Port                   = int.Parse( element.Attribute( "Port" ).Value );
             Station                = byte.Parse( element.Attribute( "Station" ).Value );
             IsAddressStartWithZero = bool.Parse( element.Attribute( "IsAddressStartWithZero" ).Value );
-            IsWordReverse          = bool.Parse( element.Attribute( "IsWordReverse" ).Value );
+            DataFormat             = int.Parse( element.Attribute( "DataFormat" ).Value );
             IsStringReverse        = bool.Parse( element.Attribute( "IsStringReverse" ).Value );
         }
 
@@ -97,7 +98,7 @@ namespace SharpNodeSettings.Node.Device
             element.SetAttributeValue( "Port", Port );
             element.SetAttributeValue( "Station", Station );
             element.SetAttributeValue( "IsAddressStartWithZero", IsAddressStartWithZero );
-            element.SetAttributeValue( "IsWordReverse", IsWordReverse );
+            element.SetAttributeValue( "DataFormat", DataFormat );
             element.SetAttributeValue( "IsStringReverse", IsStringReverse );
             return element;
         }
@@ -117,7 +118,7 @@ namespace SharpNodeSettings.Node.Device
             list.Add( NodeClassRenderItem.CreateIpPort( Port ) );
             list.Add( NodeClassRenderItem.CreateStation( Station ) );
             list.Add( NodeClassRenderItem.CreateIsAddressStartWithZero( IsAddressStartWithZero ) );
-            list.Add( NodeClassRenderItem.CreateIsWordReverse( IsWordReverse ) );
+            list.Add( NodeClassRenderItem.CreateDataFormat( DataFormat ) );
             list.Add( NodeClassRenderItem.CreateIsStringReverse( IsStringReverse ) );
             return list;
         }

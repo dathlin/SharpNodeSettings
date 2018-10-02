@@ -28,7 +28,7 @@ namespace SharpNodeSettings.Device
             modbusTcp = new ModbusTcpNet( nodeModbus.IpAddress, nodeModbus.Port, nodeModbus.Station );
             modbusTcp.AddressStartWithZero = nodeModbus.IsAddressStartWithZero;
             modbusTcp.ConnectTimeOut = nodeModbus.ConnectTimeOut;
-            modbusTcp.IsMultiWordReverse = nodeModbus.IsWordReverse;
+            modbusTcp.DataFormat = (HslCommunication.Core.DataFormat)nodeModbus.DataFormat;
             modbusTcp.IsStringReverse = nodeModbus.IsStringReverse;
 
             ByteTransform = modbusTcp.ByteTransform;
