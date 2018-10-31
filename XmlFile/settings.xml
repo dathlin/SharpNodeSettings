@@ -37,6 +37,7 @@
     <RegularNode Name="B" Description="">
       <RegularItemNode Name="温度" Description="" Index="0" TypeCode="3" TypeLength="1" />
       <RegularItemNode Name="压力" Description="" Index="2" TypeCode="3" TypeLength="1" />
+      <RegularItemNode Name="条码" Description="" Index="4" TypeCode="11" TypeLength="10" />
     </RegularNode>
   </NodeClass>
 </Settings>

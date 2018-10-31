@@ -453,7 +453,7 @@ namespace SharpNodeSettings.OpcUaServer
                     regularNode.RegularCode == RegularNodeTypeItem.StringUtf8.Code)
                 {
 
-                    var dataVariableState = CreateBaseVariable( parent, regularNode.Name, regularNode.Description, DataTypeIds.String, ValueRanks.OneDimension, string.Empty );
+                    var dataVariableState = CreateBaseVariable( parent, regularNode.Name, regularNode.Description, DataTypeIds.String, ValueRanks.Scalar, "" );
                     dict_BaseDataVariableState.Add( dataVariableState.NodeId.ToString( ), dataVariableState );
                 }
             }
@@ -533,6 +533,14 @@ namespace SharpNodeSettings.OpcUaServer
             variable.Value = defaultValue;
             variable.StatusCode = StatusCodes.Good;
             variable.Timestamp = DateTime.Now;
+            if (valueRank == ValueRanks.OneDimension)
+            {
+                variable.ArrayDimensions = new ReadOnlyList<uint>( new List<uint> { 0 } );
+            }
+            else if (valueRank == ValueRanks.TwoDimensions)
+            {
+                variable.ArrayDimensions = new ReadOnlyList<uint>( new List<uint> { 0, 0 } );
+            }
 
             if (parent != null)
             {
