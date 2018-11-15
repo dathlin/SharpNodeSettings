@@ -23,6 +23,7 @@ namespace SharpNodeSettings.Device
         public DeviceModbusTcp( XElement element )
         {
             NodeModbusTcpClient nodeModbus = new NodeModbusTcpClient( );
+            nodeModbus.LoadByXmlElement( element );
             LoadRequest( element );
 
             modbusTcp = new ModbusTcpNet( nodeModbus.IpAddress, nodeModbus.Port, nodeModbus.Station );
