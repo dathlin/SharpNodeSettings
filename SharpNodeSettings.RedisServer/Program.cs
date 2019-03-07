@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using StackExchange.Redis;
 using HslCommunication.LogNet;
-
+using HslCommunication.Enthernet.Redis;
+using HslCommunication;
 
 /*****************************************************************************************************************
  * 
@@ -27,17 +27,8 @@ namespace SharpNodeSettings.RedisServer
         static void Main( string[] args )
         {
             // 创建Redis
-            ConnectionMultiplexer redis = null;
-            try
-            {
-                redis = ConnectionMultiplexer.Connect( "127.0.0.1:6379" );
-            }
-            catch
-            {
-                Console.WriteLine( "本次数据创建失败，请稍候重试，具体原因。" );
-                Console.ReadLine( );
-                return;
-            }
+            RedisClient redis = new RedisClient( "127.0.0.1", 6379, "" );
+            redis.SetPersistentConnection( ); // 设置长连接
 
             // 创建日志
             ILogNet logNet = new LogNetSingle( "log.txt" );
@@ -47,14 +38,10 @@ namespace SharpNodeSettings.RedisServer
             sharpNodeServer.LogNet = logNet;
             sharpNodeServer.WriteCustomerData = ( Device.DeviceCore deviceCore, string name ) =>
             {
-                try
+                OperateResult write = redis.WriteKey( string.Join( ":", deviceCore.DeviceNodes ) + ":" + name, deviceCore.GetStringValueByName( name ) );
+                if (!write.IsSuccess)
                 {
-                    IDatabase redisDb = redis.GetDatabase( );
-                    redisDb.StringSet( string.Join( ":", deviceCore.DeviceNodes ) + ":" + name, deviceCore.GetStringValueByName( name ) );
-                }
-                catch
-                {
-                    logNet.WriteError( "写入Redis失败" );
+                    Console.WriteLine( "Redis Write Failed" );
                 }
             };
             // 加载配置文件之前设置redis写入方法
